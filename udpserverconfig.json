@@ -1,0 +1,6 @@
+{
+"host":"localhost",
+"dbName":"utenotificaciones",
+"dbUser":"postgres",
+"dbPass":"postgres"
+}
