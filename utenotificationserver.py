@@ -6,9 +6,8 @@ import queue
 import time
 import os
 import shutil
-from NotificationDBStorage import NotificationDatabase
 import sys
-
+from NotificationDBStorageAlchemy import  NotificationDatabase
 from uteUdpNotificationReceiver import UteUdpReceiver
 
 
@@ -109,32 +108,21 @@ class StorageDbHandler (threading.Thread):
                 self.tableName="notifications"
                 #self.diasConservados = diasConservados         
     
-    def run(self):     
-    
-        self.db=NotificationDatabase(self.dbConfig['dbName'], self.dbConfig['dbUser'], self.dbConfig['dbPass'],self.dbConfig['host'])
-        
-        try:
-            self.db.connect()
-            self.db.doBasicSetup(self.tableName)
-        except Exception as e:
-            print(e)
-            exit(0)
-            
-        while True:            
-            toSave=[]
+    def run(self):
+
+        while True:
+            toSave = []
             self.sqlock.acquire()
             while not self.sq.empty():
                 toSave.append(self.sq.get())
             self.sqlock.release()
-            
-            
-            if len(toSave)>0:
-                self.db.storeNotification(self.tableName,toSave)
+
+            if len(toSave) > 0:
+                NotificationDatabase.storeNotification(toSave)
             time.sleep(1)
 
-        
-        
-        
+
+
 class SocketHandler_NotificationDistributor (threading.Thread):
     
     def __init__(self, socketQueue, socketLock, udpQueue, udpLock,sq,sqlock,storageMode):
