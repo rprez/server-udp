@@ -194,11 +194,11 @@ class SocketHandler_NotificationDistributor (threading.Thread):
                             socketsToBeRemoved.append(s)
                             break
                     
-                    if storageMode=="db":
+                    if self.storageMode=="db":
                         self.sqlock.acquire()
                         self.sq.put(m)
                         self.sqlock.release()
-                    elif storageMode=="file":
+                    elif self.storageMode=="file":
                         saveNoticationToDiskTest(m)
                     
                 if len(self.socketList) == 0:
