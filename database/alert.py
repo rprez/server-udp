@@ -1,12 +1,12 @@
 import datetime
 
-from sqlalchemy import Column, Integer, String,BigInteger,TIMESTAMP,DECIMAL
+from sqlalchemy import Column, Integer, String,Sequence,TIMESTAMP
 
 from .base import Base
 
 class Alert(Base):
     __tablename__ = "notifications_alert"
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer,Sequence('id_seq_alert'), primary_key=True)
     imei = Column('imei', String(32))
     ip = Column('ip', TIMESTAMP)
     fecha = Column('fecha', TIMESTAMP)
