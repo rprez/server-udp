@@ -1,5 +1,5 @@
 {
-"host":"172.17.0.2",
+"host":"172.17.0.3",
 "dbName":"utenotificaciones",
 "dbUser":"postgres",
 "dbPass":"postgres"

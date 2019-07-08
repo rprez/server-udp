@@ -13,13 +13,9 @@ class NotificationDatabase:
         # 3 - create a new session
         session = Session()
 
-        for noti in notis:
-            if "alert" in noti:
-                newMessage = Alert(noti)
-                #self.insertAlert(tableName+"_alert", noti)
-            else:
-                newMessage = Notification(noti)
-                #self.insertNotification(tableName, noti)
+        notis = [Alert(x) if "alert" in x else Notification(x) for x in notis]
+
+        for newMessage in notis:
             session.add(newMessage)
             session.commit()
         session.close()
