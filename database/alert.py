@@ -6,6 +6,7 @@ from .base import Base
 
 class Alert(Base):
     __tablename__ = "notifications_alert"
+
     id = Column(Integer,Sequence('id_seq_alert'), primary_key=True)
     imei = Column('imei', String(32))
     ip = Column('ip', TIMESTAMP)
