@@ -61,7 +61,7 @@ class UteUdpSimulator(threading.Thread):
         
         packet['imei']=359486064904103
         packet['ip']="192.168.210.18"
-        packet['fecha']="19-5-17 10:30:29"
+        packet['fecha']=datetime.datetime.now().__format__("%y-%m-%d %H:%M:%S")
         packet['alert']="lastgasp sent"
         
         return packet
@@ -75,7 +75,7 @@ class UteUdpSimulator(threading.Thread):
         packet['imei']=self.randomImei()
         packet['rssi']=" -88 dmb"
         packet['ip']=str(random.randint(1,255))+"."+str(random.randint(1,255))+"."+str(random.randint(1,255))+"."+str(random.randint(1,255))
-        packet['fecha']=self.gen_timestamp().strftime("%y-%m-%d %H:%M:%S")            
+        packet['fecha']=datetime.datetime.now().__format__("%y-%m-%d %H:%M:%S")
     
         packet['rssi']="-%d dbm"%(dbm)
         packet['EC/NO']=32
@@ -91,7 +91,7 @@ class UteUdpSimulator(threading.Thread):
         
         while self.count>0:
             self.count-=1
-            newMsg=self.createNewRandomPacket()
+            newMsg=self.createRandomAlert()
             txt=json.dumps(newMsg,indent=0, sort_keys=True)
 
             self.sock.sendto(txt.encode(), (self.host, self.port))

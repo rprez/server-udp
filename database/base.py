@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 #engine = create_engine('postgresql://postgres:postgres@172.17.0.3:5432/utenotificaciones')
-engine = create_engine('oracle://ute_test:ut3_t3st@localhost:1521/ORCLCDB')
+engine = create_engine('oracle://ute:ute@172.17.0.2:1521/ORCLCDB')
 
 Session = sessionmaker(bind=engine)
 
