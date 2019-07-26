@@ -9,7 +9,7 @@ class Alert(Base):
 
     id = Column(Integer,Sequence('id_seq_alert'), primary_key=True)
     imei = Column('imei', String(32))
-    ip = Column('ip', TIMESTAMP)
+    ip = Column('ip', String(15))
     fecha = Column('fecha', TIMESTAMP)
     alert = Column('alert', String(40))
 
