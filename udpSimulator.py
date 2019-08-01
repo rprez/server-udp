@@ -25,8 +25,8 @@ class UteUdpSimulator(threading.Thread):
         
     def gen_timestamp(self):
         # gera um datetime no formato yyyy-mm-dd hh:mm:ss.000000
-        year = 2018
-        month = random.randint(11, 12)
+        year = 2019
+        month = 7
         day = random.randint(1, 28)
         hour = random.randint(1, 23)
         minute = random.randint(1, 59)
@@ -55,6 +55,7 @@ class UteUdpSimulator(threading.Thread):
         packet['imei']=self.randomImei()
         packet['ip']="192.168.210.18"
         packet['fecha']=datetime.datetime.now().__format__("%y-%m-%d %H:%M:%S")
+        #packet['fecha'] = self.gen_timestamp().__format__("%y-%m-%d %H:%M:%S")
         packet['alert']="lastgasp sent"
         
         return packet
@@ -69,6 +70,7 @@ class UteUdpSimulator(threading.Thread):
         packet['rssi']=" -88 dmb"
         packet['ip']=str(random.randint(1,255))+"."+str(random.randint(1,255))+"."+str(random.randint(1,255))+"."+str(random.randint(1,255))
         packet['fecha']=datetime.datetime.now().__format__("%y-%m-%d %H:%M:%S")
+        #packet['fecha'] = self.gen_timestamp().__format__("%y-%m-%d %H:%M:%S")
     
         packet['rssi']="-%d dbm"%(dbm)
         packet['EC/NO']=32
@@ -86,7 +88,7 @@ class UteUdpSimulator(threading.Thread):
         for m in messages_notification + messages_alert:
             self.sock.sendto(json.dumps(m,indent=0, sort_keys=True).encode(), (self.host, self.port))
             time.sleep(self.interval)
-        print(f"Alertas {self.count_alert} Errores: {self.count_notification}")
+        print(f"Alertas {self.count_alert} Notificaciones: {self.count_notification}")
            
            
 print(sys.argv)
