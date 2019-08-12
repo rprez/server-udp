@@ -3,17 +3,12 @@ import threading
 import os
 import sys
 import json
-import socket
 
 from utenotificationserver import StorageDbHandler
 from utenotificationserver import SocketHandler_NotificationDistributor
-from utenotificationserver import SocketHandler_NotificationHistory
-from utenotificationserver import HistoryCleaner
-
 from uteUdpNotificationReceiver import UteUdpReceiver
 
 if __name__ == "__main__":
-    HOST, PORT = "", 15353
     udpPort = 12345
 
     if not os.path.exists("history"):
@@ -55,43 +50,9 @@ if __name__ == "__main__":
     udpReceiver.setDaemon(True)
     udpReceiver.start()
 
-    # notification distributor
-    newSocketQueue = queue.Queue()
-    newSocketLock = threading.Lock()
-
-    resender = SocketHandler_NotificationDistributor(
-        newSocketQueue, newSocketLock, udpQueue, udpLock, storageQueue, storageQueueLock, storageMode)
+    resender = SocketHandler_NotificationDistributor(udpQueue, udpLock, storageQueue, storageQueueLock, storageMode)
     resender.setDaemon(True)
     resender.start()
 
-    # conection receiver
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    server_socket.bind((HOST, PORT))
-    server_socket.listen(20)
-
-    historyHandler = SocketHandler_NotificationHistory(resender.socketList)
-    historyHandler.setDaemon(True)
-    historyHandler.start()
-
-    historyCleaner = HistoryCleaner(30)
-    historyCleaner.setDaemon(True)
-    historyCleaner.start()
-
     while True:
-
-        print("Waiting connection")
-        print("Active Thread Count Before enviarFile: %d" %
-              (threading.activeCount()))
-        client, fromaddr = server_socket.accept()
-
-        newSocketLock.acquire()
-        newLock = threading.Lock()
-        newDict = {}
-        newDict['socket'] = client
-        newDict['lock'] = newLock
-        newSocketQueue.put(newDict)
-        newSocketLock.release()
-        print("Connection accepted from ")
-        print(fromaddr)
-        ip = fromaddr[0]
+        newLock = []

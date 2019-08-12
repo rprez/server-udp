@@ -14,9 +14,7 @@ class UteUdpReceiver(threading.Thread):
     
     def parseDataToJson(self,data):
         try:
-            parsedJson=json.loads(data)
-            
-            return parsedJson           
+            return json.loads(data)
         except Exception as e:
             #correccion de bug en firmware 1.63
             if "\"rssi\" : \" \"" in data:
@@ -26,20 +24,18 @@ class UteUdpReceiver(threading.Thread):
                     return parsedJson 
                 except Exception as e:
                     pass
-        return None   
-                
-    
+
     def run(self):    
         
         self.sock.bind(("",self.port))
-    
+        print(f"Start UDP server port: {self.port}")
+
         while True:
             data, addr = self.sock.recvfrom(1024) # buffer size is 1024 bytes
             strData=data.decode('ascii')
             print ("received message from :"+ strData)
             
             parsedJson=self.parseDataToJson(strData)
-          #  print(parsedJson)
             if parsedJson:
                 self.queueLock.acquire()
                 self.udpQueue.put(parsedJson)
