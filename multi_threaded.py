@@ -34,7 +34,6 @@ class UDPRequestHandler(BaseRequestHandler):
         parsed_json = parseDataToJson(data)
 
         if parsed_json:
-            print(f"Message parsed {parsed_json}")
             NotificationDatabase.store(parsed_json)
         else:
             print(f"Error parsing json: {data}")

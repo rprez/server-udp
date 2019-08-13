@@ -22,10 +22,9 @@ class NotificationDatabase:
 
         #create a new session
         session = Session()
-
         newMessage = Alert(notis) if "alert" in notis else Notification(notis)
-
-
         session.add(newMessage)
-        session.commit()
-        session.close()
+        try:
+            session.commit()
+        finally:
+            session.close()
