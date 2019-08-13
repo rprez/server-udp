@@ -9,3 +9,6 @@ engine = create_engine('oracle://ute:ute@172.17.0.2:1521/ORCLCDB')
 Session = sessionmaker(bind=engine)
 
 Base = declarative_base()
+
+# generate database schema
+Base.metadata.create_all(engine)

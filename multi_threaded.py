@@ -39,8 +39,8 @@ class UDPRequestHandler(BaseRequestHandler):
         else:
             print(f"Error parsing json: {data}")
 
-        # Print the name of the thread
-        print(f"Thread Name:{threading.current_thread().name}")
+        # Print total thread created
+        print(f"Total thread:{threading.active_count()}")
 
 
 class ThreadedUDPServer(ThreadingMixIn, UDPServer):

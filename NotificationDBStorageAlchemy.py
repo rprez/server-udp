@@ -1,4 +1,4 @@
-from database.base import Session, engine, Base
+from database.base import Session, engine
 from database.alert import  Alert
 from database.notification import Notification
 
@@ -7,10 +7,7 @@ class NotificationDatabase:
     @staticmethod
     def storeNotification(notis):
 
-        # 2 - generate database schema
-        Base.metadata.create_all(engine)
-
-        # 3 - create a new session
+        # create a new session
         session = Session()
         print(notis)
         notis = [Alert(x) if "alert" in x else Notification(x) for x in notis]
@@ -23,10 +20,7 @@ class NotificationDatabase:
     @staticmethod
     def store(notis):
 
-        # 2 - generate database schema
-        Base.metadata.create_all(engine)
-
-        # 3 - create a new session
+        #create a new session
         session = Session()
 
         newMessage = Alert(notis) if "alert" in notis else Notification(notis)
