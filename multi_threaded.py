@@ -26,14 +26,14 @@ class UDPRequestHandler(BaseRequestHandler):
     # Override the handle() method
 
     def handle(self):
-        # Receive and print the datagram received from client
-        print(f"Recieved one request from {self.client_address[0]}")
 
         data = str(self.request[0], 'ascii')
 
         parsed_json = parseDataToJson(data)
 
         if parsed_json:
+            # Receive and print the datagram received from client
+            print(f"Request from {self.client_address[0]} Message {parsed_json}")
             NotificationDatabase.store(parsed_json)
         else:
             print(f"Error parsing json: {data}")
