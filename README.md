@@ -22,7 +22,7 @@ Aplicación servidor de mensajes UDP. Almacena paquetes de mensajes envíados po
 * ORA_CONNECTION - Conexión a Oracle ej: ute:ute@172.17.0.3:1521/ORCLCDB
 
 ### Oracle
-Instalar los drivers correspondiente a la versión desde:
+Instalar el driver correspondiente a la versión desde:
 * https://oracle.github.io/odpi/doc/installation.html#other-platforms
 
 
