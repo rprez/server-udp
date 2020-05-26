@@ -2,13 +2,20 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+import os
 
-#engine = create_engine('postgresql://postgres:postgres@172.17.0.3:5432/utenotificaciones')
-engine = create_engine('oracle://ute:ute@172.17.0.2:1521/ORCLCDB',pool_size=10, max_overflow=20)
+PG_CONNECTION = os.getenv("PG_CONNECTION")
+ORA_CONNECTION = os.getenv("ORA_CONNECTION")
 
-Session = sessionmaker(bind=engine)
+if PG_CONNECTION:
+    engine = create_engine(f'postgresql://{PG_CONNECTION}')
+if ORA_CONNECTION:
+    engine = create_engine(f'oracle://{ORA_CONNECTION}',pool_size=10, max_overflow=20,max_identifier_length=128)
 
-Base = declarative_base()
+if PG_CONNECTION or ORA_CONNECTION:
+    Session = sessionmaker(bind=engine)
 
-# generate database schema
-Base.metadata.create_all(engine)
+    Base = declarative_base()
+
+    # generate database schema
+    result = Base.metadata.create_all(engine)

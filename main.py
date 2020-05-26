@@ -4,6 +4,7 @@ from NotificationDBStorageAlchemy import  NotificationDatabase
 import threading
 import json
 import time
+import os
 
 def parseDataToJson(data):
     try:
@@ -51,20 +52,25 @@ if __name__ == "__main__":
     # ThreadingUDPServer permite crear multi-threaded UDP server.
 
     # Create a tuple with IP Address and Port Number
-    ServerAddress = "", 12345
+    ip_addres = os.getenv("IP_ADDRESS")
+    listen_port = os.getenv("LISTEN_PORT")
+    if ip_addres and listen_port:
+        ServerAddress = ip_addres, int(listen_port)
 
-    UDPServerObject = ThreadedUDPServer(ServerAddress, UDPRequestHandler)
-    #UDPServerObject.serve_forever()
-    # Start a thread with the server -- that thread will then start one more thread for each request
-    server_thread = threading.Thread(target=UDPServerObject.serve_forever)
-    # Exit the server thread when the main thread terminates
-    server_thread.daemon = True
+        UDPServerObject = ThreadedUDPServer(ServerAddress, UDPRequestHandler)
+        #UDPServerObject.serve_forever()
+        # Start a thread with the server -- that thread will then start one more thread for each request
+        server_thread = threading.Thread(target=UDPServerObject.serve_forever)
+        # Exit the server thread when the main thread terminates
+        server_thread.daemon = True
 
-    try:
-        server_thread.start()
-        print(f"Server started at {ServerAddress} ")
-        while True: time.sleep(100)
-    except (KeyboardInterrupt, SystemExit):
-        server_thread.start()
-        print("Server starting running in thread:", server_thread.name)
-        UDPServerObject.shutdown()
+        try:
+            server_thread.start()
+            print(f"Server started at {ServerAddress} ")
+            while True: time.sleep(100)
+        except (KeyboardInterrupt, SystemExit):
+            server_thread.start()
+            print("Server starting running in thread:", server_thread.name)
+            UDPServerObject.shutdown()
+    else:
+        print(f"ENV variables IP_ADDRESS and LISTEN_PORT are not set")
