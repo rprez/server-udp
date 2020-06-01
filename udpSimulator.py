@@ -6,6 +6,9 @@ import time
 import random
 import sys
 
+'''
+    CLASE PARA PRUEBAS.   NO CORRER EN PRODUCCION
+'''
 
 class UteUdpSimulator(threading.Thread):
     '''
@@ -29,9 +32,9 @@ class UteUdpSimulator(threading.Thread):
         
     def gen_timestamp(self):
         # gera um datetime no formato yyyy-mm-dd hh:mm:ss.000000
-        year = 2019
-        month = 11
-        day = random.randint(1, 5)
+        year = 20
+        month = 5
+        day = random.randint(1, 30)
         hour = random.randint(1, 23)
         minute = random.randint(1, 59)
         second = random.randint(1, 59)

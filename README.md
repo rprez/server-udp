@@ -17,7 +17,7 @@ Aplicación servidor de mensajes UDP. Almacena paquetes de mensajes envíados po
 
 ### Variables de ambientes
 * IP_ADDRESS - Dirección IP en la que escucha el server
-* LISTER_PORT - Puerto en el que escucha el server
+* LISTEN_PORT - Puerto en el que escucha el server
 * PG_CONNECTION - Conexión a PostGres ej: postgres:postgres@172.17.0.3:5432/utenotificaciones
 * ORA_CONNECTION - Conexión a Oracle ej: ute:ute@172.17.0.3:1521/ORCLCDB
 
