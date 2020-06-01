@@ -8,7 +8,11 @@ import sys
 
 
 class UteUdpSimulator(threading.Thread):
-    
+    '''
+        Clase encargada de hacer pruebas sobre el server.
+        run:
+            python3 udpSimulator [ip_host] [port] [count_notification] [count_alert] [interval]
+    '''
     def __init__(self,host,port,count_notification,count_alert,interval):
         threading.Thread.__init__(self)
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) # UDP
@@ -97,5 +101,5 @@ if len(sys.argv) == 6:
     simu = UteUdpSimulator(sys.argv[1],int(sys.argv[2]),int(sys.argv[3]),int(sys.argv[4]),float(sys.argv[5]))
     simu.start()
 else:
-    print("usage: <ip> <port> <count_notification> <count_alert> <interval>")
+    print("Args not found: <ip> <port> <count_notification> <count_alert> <interval>")
        

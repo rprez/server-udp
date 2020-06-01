@@ -1,11 +1,12 @@
-from database.base import Session, engine
+from database.base import Session
 from database.alert import  Alert
 from database.notification import Notification
+
 
 class NotificationDatabase:
 
     @staticmethod
-    def storeNotification(notis):
+    def store_notification(notis):
 
         # create a new session
         session = Session()
