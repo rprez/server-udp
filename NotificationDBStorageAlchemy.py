@@ -1,4 +1,4 @@
-from database.base import Session
+from database.base import SessionDB
 from database.alert import  Alert
 from database.notification import Notification
 
@@ -9,7 +9,7 @@ class NotificationDatabase:
     def store_notification(notis):
 
         # create a new session
-        session = Session()
+        session = SessionDB()
         print(notis)
         notis = [Alert(x) if "alert" in x else Notification(x) for x in notis]
 
@@ -22,7 +22,7 @@ class NotificationDatabase:
     def store(notis):
 
         #create a new session
-        session = Session()
+        session = SessionDB()
         newMessage = Alert(notis) if "alert" in notis else Notification(notis)
         session.add(newMessage)
         try:

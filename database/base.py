@@ -13,7 +13,7 @@ if ORA_CONNECTION:
     engine = create_engine(f'oracle://{ORA_CONNECTION}',pool_size=10, max_overflow=20,max_identifier_length=128)
 
 if PG_CONNECTION or ORA_CONNECTION:
-    Session = sessionmaker(bind=engine)
+    SessionDB = sessionmaker(bind=engine)
 
     Base = declarative_base()
 
